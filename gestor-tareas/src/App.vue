@@ -27,6 +27,20 @@ export default {
     deleteTask(taskId) {
       this.tasks = this.tasks.filter(task => task.id !== taskId);
     },
+    mounted() {
+      const savedTasks = localStorage.getItem('tasks');
+      if (savedTasks) {
+        this.tasks = JSON.parse(savedTasks);
+      }
+    },
+    watch: {
+      tasks: {
+        handler(newTasks) {
+          localStorage.setItem('tasks', JSON.stringify(newTasks));
+        },
+        deep: true,
+      },
+    },
   },
 };
 </script>
